@@ -1,3 +1,19 @@
+# Running NPE Test Class:
+
+* checkout the tag:
+    git checkout 2.12.3.ch3
+* build:
+    ant
+* get the classpath into an envar:
+    mvn dependency:build-classpath -Dmdep.outputFile=cp.txt
+    export MY_CP=$(cat cp.txt)
+* compile the test class:
+    javac -cp $MY_CP:./build/jars/spymemcached-2.12.3.ch3.jar:./build/jars/spymemcached-test-2.12.3.ch3.jar -d . src/test/manual/net/spy/memcached/test/FillWriteBufferNPETest.java
+* start memcached
+    memcached -d -p 11211 -u memcached -m 64 -c 1024
+* run it:
+    java -Xmx4g -cp $MY_CP:./build/jars/spymemcached-2.12.3.ch3.jar:./build/jars/spymemcached-test-2.12.3.ch3.jar:. net.spy.memcached.test.FillWriteBufferNPETest
+
 # Building
 
 Spymemcached can be compiled using Apache Ant by running the following
